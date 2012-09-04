@@ -9,7 +9,9 @@ Käyttäjät: Kuka tahansa
 	-Itse peli
 		-Pelissä on kaksi mailaa ja pallo ja tavoitteena on saada lyötyä pallo
 		  toisen pelaajan mailan ohi
+			-Pallo kimpoilee pelialueen ylä- ja alaosassa olevista seinistä
 		-Pisteiden lasku
+			-Peli palautuu alkuvalikkoon, jos toinen pelaaja saa n pistettä
 		-Yksinpeli
 			-Pelaaja ohjaa näppäimistöllä pelilautaa
 			-Vastustajana tekoäly, joka yrittää osua palloon

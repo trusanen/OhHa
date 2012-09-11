@@ -1,0 +1,20 @@
+﻿Tehtävämäärittely
+
+Aihe: Pong-peli
+
+Käyttäjät: Kuka tahansa
+
+-Toiminnot:
+	-Alkuvalikko, jossa valitaan yksin- tai kaksinpeli
+	-Itse peli
+		-Pelissä on kaksi mailaa ja pallo ja tavoitteena on saada lyötyä pallo
+		  toisen pelaajan mailan ohi
+			-Pallo kimpoilee pelialueen ylä- ja alaosassa olevista seinistä
+		-Pisteiden lasku
+			-Peli palautuu alkuvalikkoon, jos toinen pelaaja saa n pistettä
+		-Yksinpeli
+			-Pelaaja ohjaa näppäimistöllä pelilautaa
+			-Vastustajana tekoäly, joka yrittää osua palloon
+		-Kaksinpeli
+			-Kaksi pelaajaa ohjaavat molemmat omia mailojaan näppäimistöllä
+

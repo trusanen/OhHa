@@ -4,6 +4,10 @@
  */
 package pong;
 
+import javax.swing.*;
+import pongGUI.GUI;
+
+
 /**
  *
  * @author trusanen
@@ -15,5 +19,12 @@ public class Pong {
      */
     public static void main(String[] args) {
         // TODO code application logic here
+        
+        GUI testi = new GUI();
+        testi.setTitle("testiIkkuna");
+        testi.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        testi.setSize(350,250);
+        testi.setVisible(true);
+        
     }
 }

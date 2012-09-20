@@ -4,17 +4,22 @@
  */
 package pong;
 
-import java.util.List;
+import java.util.ArrayList;
+import javax.swing.JFrame;
 
 /**
  *
  * @author trusanen
  */
-public class Game {
+public abstract class Game implements Runnable {
     
-    private List<GameObject> gameObjects;
+    public ArrayList<GameObject> gameObjects;
+    public int sleepAmount;
+    public JFrame frame;
     
     Game() {
-        
+        gameObjects = new ArrayList<>();
+        sleepAmount = 30;
     }
+
 }

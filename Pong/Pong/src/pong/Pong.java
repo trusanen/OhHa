@@ -4,6 +4,8 @@
  */
 package pong;
 
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import javax.swing.*;
 import pongGUI.GUI;
 
@@ -18,13 +20,27 @@ public class Pong {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        // TODO code application logic here
         
-        GUI testi = new GUI();
-        testi.setTitle("testiIkkuna");
-        testi.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        testi.setSize(350,250);
-        testi.setVisible(true);
+        GUI gameGUI = new GUI();
+        Game gameLogic = new HumVsCompGame(gameGUI);
+
+        JDialog dialog = new JDialog();
+        dialog.add(gameGUI);
+        
+        dialog.setSize(300, 100);
+
+        dialog.addWindowListener(new WindowAdapter() {
+            @Override
+            public void windowClosing(WindowEvent e) {
+            System.exit(0);
+            }
+        });
+
+        dialog.setVisible(true);
+        
+        Thread logicThread = new Thread(gameLogic);
+        
+        logicThread.start();
         
     }
 }

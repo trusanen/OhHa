@@ -4,35 +4,56 @@
  */
 package pong;
 
+import java.awt.Graphics;
+
 /**
  *
  * @author trusanen
  */
-public class GameObject {
+public abstract class GameObject extends Object {
     
-    private double x;
-    private double y;
-    private double speedx;
-    private double speedy;
-    private Rectangle collisionRectangle;
+    public double x;
+    public double y;
+    public double oldx;
+    public double oldy;
+    public double speedx;
+    public double speedy;
+    public Rectangle collisionRectangle;
+    public String name;
     
     public GameObject() {
         
         x = 0;
         y = 0;
+        oldx = 0;
+        oldy = 0;
         speedx = 0;
         speedy = 0;
         collisionRectangle = new Rectangle(0, 0, 0, 0);
         
     }
     
+    public abstract void update();
+    public abstract void draw(Graphics g);
+    public abstract void collides();
+    
     public GameObject(double newx, double newy) {
         
         x = newx;
         y = newy;
-        speedx = 0;
-        speedy = 0;
-        collisionRectangle = new Rectangle(0, 0, 0, 0);
+        oldx = newx;
+        oldy = newy;
+        collisionRectangle = new Rectangle(newx, newy, 0, 0);
+        
+    }
+    
+    public GameObject(double newx, double newy, double width, double height) {
+        
+        x = newx;
+        y = newy;
+        oldx = newx;
+        oldy = newy;
+        collisionRectangle = new Rectangle(newx, newy, width, height);
         
     }
     
@@ -82,16 +103,6 @@ public class GameObject {
     public void move() {
         x = x + speedx;
         y = y + speedy;
-    }
-    
-    public boolean collidesWith(GameObject otherObject) {
-        
-        if(!(collisionRectangle.collidesWith(otherObject.getRectangle()))) {
-            return false;
-        }
-        
-        return true;
-        
     }
     
 }

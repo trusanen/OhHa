@@ -4,14 +4,33 @@
  */
 package pong;
 
+import java.awt.Graphics;
+
 /**
  *
  * @author trusanen
  */
 public class Paddle extends GameObject {
     
-    Paddle() {
-        
+    Paddle(double newx, double newy) {
+        super(newx, newy);
+    }
+    
+    Paddle(double newx, double newy, double width, double height) {
+        super(newx, newy, width, height);
+    }
+
+    @Override
+    public void update() {
+    }
+
+    @Override
+    public void draw(Graphics g) {
+        g.drawRect((int)x, (int)y, 5, 50);
+    }
+
+    @Override
+    public void collides() {
     }
     
 }

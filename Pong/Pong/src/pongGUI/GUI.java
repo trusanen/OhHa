@@ -4,31 +4,35 @@
  */
 package pongGUI;
 
-import java.awt.event.*;
+import java.awt.Graphics;
+import java.util.ArrayList;
 import javax.swing.*;
+import pong.GameObject;
 
 /**
  *
  * @author trusanen
  */
-public class GUI extends JFrame implements MouseMotionListener {
+public class GUI extends JPanel {
     
-    PeliPaneeli pp;
+    private ArrayList<GameObject> gameObjects;
     
     public GUI() {
-        PeliPaneeli pp = new PeliPaneeli();
-        addMouseMotionListener(this);
-        add(pp);
     }
-
+ 
     @Override
-    public void mouseDragged(MouseEvent e) {
-        System.out.println("Hiiri raahaa.");
+    public void paint(Graphics g) {
+        super.paint(g);
+        
+        for(GameObject obj : gameObjects) {
+            obj.draw(g);
+        }
+        
     }
-
-    @Override
-    public void mouseMoved(MouseEvent e) {
-        System.out.println("Hiiri liikkui.");
+    
+    public void drawObjects(ArrayList newGameObjects) {
+        gameObjects = newGameObjects;
+        repaint();
     }
     
 }

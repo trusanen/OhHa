@@ -5,6 +5,7 @@
 package pong;
 
 import java.awt.Graphics;
+import java.awt.event.KeyEvent;
 
 /**
  *
@@ -32,20 +33,13 @@ public class Ball extends GameObject {
     
     @Override
     public void draw(Graphics g) {
-        System.out.println(x);
         g.drawOval((int)x, (int)y, (int)width, (int)height);
     }
 
     @Override
     public void update() {
         
-        oldx = x;
-        oldy = y;
-
-        x = x + speedx;
-        y = y + speedy;
-        
-        collisionRectangle.move(speedx, speedy);
+        move();
 
     }
 
@@ -55,6 +49,21 @@ public class Ball extends GameObject {
         y = oldy;
         
         speedx = -speedx;
+    }
+
+    @Override
+    public void keyTyped(KeyEvent e) {
+        
+    }
+
+    @Override
+    public void keyPressed(KeyEvent e) {
+        
+    }
+
+    @Override
+    public void keyReleased(KeyEvent e) {
+        
     }
     
 }

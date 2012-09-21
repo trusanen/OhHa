@@ -5,12 +5,13 @@
 package pong;
 
 import java.awt.Graphics;
+import java.awt.event.KeyListener;
 
 /**
  *
  * @author trusanen
  */
-public abstract class GameObject extends Object {
+public abstract class GameObject extends Object implements KeyListener {
     
     public double x;
     public double y;
@@ -19,7 +20,7 @@ public abstract class GameObject extends Object {
     public double speedx;
     public double speedy;
     public Rectangle collisionRectangle;
-    public String name;
+    public KeyEventLogic keyLogic;
     
     public GameObject() {
         
@@ -101,8 +102,13 @@ public abstract class GameObject extends Object {
     }
     
     public void move() {
+        oldx = x;
+        oldy = y;
+        
         x = x + speedx;
         y = y + speedy;
+        
+        collisionRectangle.move(speedx, speedy);
     }
     
 }

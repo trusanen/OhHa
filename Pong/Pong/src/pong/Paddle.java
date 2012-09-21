@@ -5,6 +5,7 @@
 package pong;
 
 import java.awt.Graphics;
+import java.awt.event.KeyEvent;
 
 /**
  *
@@ -22,6 +23,9 @@ public class Paddle extends GameObject {
 
     @Override
     public void update() {
+        
+        move();
+        
     }
 
     @Override
@@ -31,6 +35,30 @@ public class Paddle extends GameObject {
 
     @Override
     public void collides() {
+    }
+
+    @Override
+    public void keyTyped(KeyEvent e) {
+    }
+
+    @Override
+    public void keyPressed(KeyEvent e) {
+        if(e.getKeyChar() == 's') {
+            speedy = 1;
+        }
+        if(e.getKeyChar() == 'w') {
+            speedy = -1;
+        }
+    }
+
+    @Override
+    public void keyReleased(KeyEvent e) {
+        if(e.getKeyChar() == 's') {
+            speedy = 0;
+        }
+        if(e.getKeyChar() == 'w') {
+            speedy = 0;
+        }
     }
     
 }

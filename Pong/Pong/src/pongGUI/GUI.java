@@ -17,8 +17,7 @@ public class GUI extends JPanel {
     
     private ArrayList<GameObject> gameObjects;
     
-    public GUI() {
-    }
+    public GUI() {}
  
     @Override
     public void paint(Graphics g) {
@@ -27,7 +26,6 @@ public class GUI extends JPanel {
         for(GameObject obj : gameObjects) {
             obj.draw(g);
         }
-        
     }
     
     public void drawObjects(ArrayList newGameObjects) {

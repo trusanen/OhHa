@@ -4,6 +4,7 @@
  */
 package pong;
 
+import java.awt.event.KeyListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import javax.swing.*;
@@ -35,7 +36,9 @@ public class Pong {
             System.exit(0);
             }
         });
-
+        
+        dialog.addKeyListener(gameLogic);
+        
         dialog.setVisible(true);
         
         Thread logicThread = new Thread(gameLogic);
@@ -43,4 +46,5 @@ public class Pong {
         logicThread.start();
         
     }
+
 }

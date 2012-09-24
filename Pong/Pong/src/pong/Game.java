@@ -14,7 +14,7 @@ import java.util.ArrayList;
 public abstract class Game implements Runnable, KeyListener {
     
     public ArrayList<GameObject> gameObjects;
-    public ArrayList<GameObject> controlledObjects;
+    public ArrayList<KeyListener> controlledObjects;
     public int sleepAmount;
     
     Game() {

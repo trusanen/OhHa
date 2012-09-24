@@ -11,7 +11,7 @@ import java.awt.event.KeyListener;
  *
  * @author trusanen
  */
-public abstract class GameObject extends Object implements KeyListener {
+public abstract class GameObject extends Object {
     
     public double x;
     public double y;
@@ -20,7 +20,6 @@ public abstract class GameObject extends Object implements KeyListener {
     public double speedx;
     public double speedy;
     public Rectangle collisionRectangle;
-    public KeyEventLogic keyLogic;
     
     public GameObject() {
         

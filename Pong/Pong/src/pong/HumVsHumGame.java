@@ -14,22 +14,23 @@ import pongGUI.GUI;
  *
  * @author trusanen
  */
-public class HumVsCompGame extends Game {
+public class HumVsHumGame extends Game {
     
     private GUI gameGUI;
     
-    HumVsCompGame(GUI newGameGUI) {
+    HumVsHumGame(GUI newGameGUI) {
         super();
         gameGUI = newGameGUI;
         
         Player1Paddle player1 = new Player1Paddle(0, 0, 5, 50);
-        Paddle computer = new Paddle(100, 0, 5, 50);
+        Player2Paddle player2 = new Player2Paddle(100, 0, 5, 50);
         
         gameObjects.add(new Ball(45, 20, 10, 10));
         gameObjects.add(player1);
-        gameObjects.add(computer);
+        gameObjects.add(player2);
         
         controlledObjects.add(player1);
+        controlledObjects.add(player2);
         
     }
     
@@ -101,4 +102,5 @@ public class HumVsCompGame extends Game {
             obj.keyReleased(e);
         }
     }
+    
 }

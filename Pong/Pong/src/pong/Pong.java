@@ -4,7 +4,6 @@
  */
 package pong;
 
-import java.awt.event.KeyListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import javax.swing.*;
@@ -23,7 +22,7 @@ public class Pong {
     public static void main(String[] args) {
         
         GUI gameGUI = new GUI();
-        Game gameLogic = new HumVsCompGame(gameGUI);
+        Game gameLogic = new HumVsHumGame(gameGUI);
 
         JDialog dialog = new JDialog();
         dialog.add(gameGUI);

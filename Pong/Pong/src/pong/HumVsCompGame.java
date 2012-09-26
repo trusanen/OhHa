@@ -4,10 +4,12 @@
  */
 package pong;
 
-import GameClasses.Player1Paddle;
-import GameClasses.Paddle;
 import GameClasses.Ball;
 import GameClasses.GameObject;
+import GameClasses.Goal;
+import GameClasses.Paddle;
+import GameClasses.Player1Paddle;
+import GameClasses.Wall;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.util.logging.Level;
@@ -16,22 +18,35 @@ import pongGUI.GUI;
 
 /**
  *
+ * Pelaaja vastaan tietokone -peli.
+ * 
  * @author trusanen
  */
 public class HumVsCompGame extends Game {
     
     private GUI gameGUI;
+    private Goal player1Goal;
+    private Goal player2Goal;
     
     HumVsCompGame(GUI newGameGUI) {
         super();
         gameGUI = newGameGUI;
         
-        Player1Paddle player1 = new Player1Paddle(0, 0, 5, 50);
-        Paddle computer = new Paddle(100, 0, 5, 50);
+        Ball gameBall = new Ball(250, 145, 10, 10);
         
-        gameObjects.add(new Ball(45, 20, 10, 10));
+        Player1Paddle player1 = new Player1Paddle(100, 125, 10, 50);
+        Paddle player2 = new Paddle(395, 125, 10, 50, gameBall);
+        
+        player1Goal = new Goal(80, 50, 10, 210);
+        player2Goal = new Goal(415, 50, 10, 210);
+        
+        gameObjects.add(gameBall);
         gameObjects.add(player1);
-        gameObjects.add(computer);
+        gameObjects.add(player2);
+        gameObjects.add(new Wall(100, 50, 305, 5));
+        gameObjects.add(new Wall(100, 255, 305, 5));
+        gameObjects.add(player1Goal);
+        gameObjects.add(player2Goal);
         
         controlledObjects.add(player1);
         
@@ -41,7 +56,7 @@ public class HumVsCompGame extends Game {
         
         if(obj1.collisionRectangle.collidesWith(obj2.collisionRectangle) || obj2.collisionRectangle.collidesWith(obj1.collisionRectangle)) {
             return true;
-        }        
+        }
         return false;
     }
     
@@ -70,21 +85,22 @@ public class HumVsCompGame extends Game {
         } catch (InterruptedException ex) {
             Logger.getLogger(HumVsCompGame.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
     }
 
     @Override
-    public void run() {
+    public int run() {
         
-        while(true) {
+        while(player1Goal.getScore() < 5 && player2Goal.getScore() < 5) {
             
             updateObjects();
             
             drawObjects();
             
             sleep();
-
+            
         }
+        
+        return 0;
     }
 
     @Override

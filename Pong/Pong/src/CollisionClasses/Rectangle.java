@@ -5,6 +5,9 @@
 package CollisionClasses;
 
 /**
+ * 
+ * Neliö-luokka. Ohjelman törmäyksentunnistus hoidetaan
+ * neliö-olioilla. Sisältää neliö-olioiden toimintalogiikan.
  *
  * @author trusanen
  */

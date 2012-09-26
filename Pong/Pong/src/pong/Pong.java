@@ -11,18 +11,24 @@ import pongGUI.GUI;
 
 
 /**
+ * Pääluokka, luo pelin ja graafisen käyttöliittymän.
  *
  * @author trusanen
  */
 public class Pong {
 
     /**
+     * Pääsilmukka, luo pelin ja graafisen käyttöliittymän, 
+     * luo niiden asetukset ja ajaa pelilogiikan.
+     * 
      * @param args the command line arguments
      */
     public static void main(String[] args) {
         
+        int state = 1;
+        
         GUI gameGUI = new GUI();
-        Game gameLogic = new HumVsHumGame(gameGUI);
+        Game gameLogic = new HumVsCompGame(gameGUI);
 
         JDialog dialog = new JDialog();
         dialog.add(gameGUI);
@@ -40,9 +46,10 @@ public class Pong {
         
         dialog.setVisible(true);
         
-        Thread logicThread = new Thread(gameLogic);
+        state = gameLogic.run();
         
-        logicThread.start();
+        dialog.dispose();
+        
     }
 
 }

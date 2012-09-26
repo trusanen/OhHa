@@ -7,6 +7,8 @@ package GameClasses;
 import java.awt.Graphics;
 
 /**
+ * 
+ * Pallo-luokka. Sisältää pelipallon toimintalogiikan.
  *
  * @author trusanen
  */
@@ -40,19 +42,40 @@ public class Ball extends GameObject {
         
     }
     
-    private double calculateBounceAngle(GameObject other) {
+    public double[] getMeasures() {
+        
+        double[] ballMeasures = new double[2];
+        
+        ballMeasures[0] = width;
+        ballMeasures[1] = height;
+        
+        return ballMeasures;
+    }
+    
+    public double calculateBounceAngle(GameObject other) {
         
         double othery = other.getRectangle().getCoordinates()[1];
         double otherHeight = other.getRectangle().getCoordinates()[3];
         
         if(speedy < 0) {
 
-            return 0.1 * ( y + 5 - 
+            return 0.1 * ( y + (height/2) - 
                     (othery + (otherHeight/2)));
         }
         else {
-            return 0.1 * ( y + 5 - 
+            return 0.1 * ( y + (height/2) - 
                     (othery + (otherHeight/2)));
+        }
+        
+    }
+    
+    public double changeXDirection() {
+        
+        if(speedx > 0) {
+            return -speedx - 0.2;
+        }
+        else {
+            return -speedx + 0.2;
         }
         
     }
@@ -64,9 +87,7 @@ public class Ball extends GameObject {
 
     @Override
     public void update() {
-        
         move();
-
     }
 
     @Override
@@ -77,16 +98,10 @@ public class Ball extends GameObject {
 
         collisionRectangle.setCoordinates(oldx, oldy);
         
-        if(other instanceof Player1Paddle) {
+        if(other instanceof Paddle) {
             
-            speedx = -speedx + 0.2;
+            speedx = changeXDirection();
             speedy = calculateBounceAngle(other);
-            
-        }
-        if(other instanceof Player2Paddle) {
-            
-            speedx = -speedx - 0.2;            
-            speedy = calculateBounceAngle(other); 
             
         }
         if(other instanceof Wall) {

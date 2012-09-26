@@ -18,6 +18,8 @@ import pongGUI.GUI;
 
 /**
  *
+ * 2:n Pelaajan peli.
+ * 
  * @author trusanen
  */
 public class HumVsHumGame extends Game {
@@ -30,8 +32,8 @@ public class HumVsHumGame extends Game {
         super();
         gameGUI = newGameGUI;
         
-        Player1Paddle player1 = new Player1Paddle(100, 125, 5, 50);
-        Player2Paddle player2 = new Player2Paddle(400, 125, 5, 50);
+        Player1Paddle player1 = new Player1Paddle(100, 125, 10, 50);
+        Player2Paddle player2 = new Player2Paddle(395, 125, 10, 50);
         
         player1Goal = new Goal(80, 50, 20, 210);
         player2Goal = new Goal(405, 50, 20, 210);
@@ -85,7 +87,7 @@ public class HumVsHumGame extends Game {
     }
 
     @Override
-    public void run() {
+    public int run() {
         
         while(player1Goal.getScore() < 5 && player2Goal.getScore() < 5) {
             
@@ -97,7 +99,7 @@ public class HumVsHumGame extends Game {
             
         }
         
-        System.out.println("Finished");
+        return 0;
     }
 
     @Override

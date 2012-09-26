@@ -8,6 +8,8 @@ import CollisionClasses.Rectangle;
 import java.awt.Graphics;
 
 /**
+ * Abstrakti peliolio-yläluokka. Paikkamäärittelyt,
+ * nopeusmäärittelyt ja törmäyksentunnistusmäärittelyt.
  *
  * @author trusanen
  */
@@ -89,11 +91,6 @@ public abstract class GameObject extends Object {
     public void setSpeed(double newSpeedx, double newSpeedy) {
         speedx = newSpeedx;
         speedy = newSpeedy;
-    }
-    
-    public void setSpeed(double[] speeds) {
-        speedx = speeds[0];
-        speedy = speeds[1];
     }
     
     public void setRectangle(Rectangle rect) {

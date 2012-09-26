@@ -7,6 +7,9 @@ package GameClasses;
 import java.awt.Graphics;
 
 /**
+ * 
+ * Muuri-peliolio. Pallon törmätessä muuri-olioon
+ * sen y-nopeus vaihtuu.
  *
  * @author trusanen
  */

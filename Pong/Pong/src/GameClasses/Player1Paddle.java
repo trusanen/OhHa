@@ -8,6 +8,9 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 
 /**
+ * 
+ * Ensimmäisen pelaajan maila. Sisältää näppäinmäärittelyt
+ * ensimmäiselle pelaajalle.
  *
  * @author trusanen
  */

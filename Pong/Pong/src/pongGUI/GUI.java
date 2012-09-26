@@ -4,12 +4,14 @@
  */
 package pongGUI;
 
+import GameClasses.GameObject;
 import java.awt.Graphics;
 import java.util.ArrayList;
 import javax.swing.*;
-import GameClasses.GameObject;
 
 /**
+ * 
+ * Käyttöliittymäluokka. Sisältää piirtologiikan.
  *
  * @author trusanen
  */

@@ -7,6 +7,9 @@ package GameClasses;
 import java.awt.Graphics;
 
 /**
+ * 
+ * Maalialue-luokka. Pallon törmätessä maalialue-olioon
+ * se palautuu keskelle ja lisää pistemäärää yhdellä.
  *
  * @author trusanen
  */

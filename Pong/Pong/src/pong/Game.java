@@ -8,7 +8,16 @@ import GameClasses.GameObject;
 import java.awt.event.KeyListener;
 import java.util.ArrayList;
 
-public abstract class Game implements Runnable, KeyListener {
+/**
+ * 
+ * Abstrakti yläluokka, sisältää listat GameObject
+ * -olioita ja KeyListener-olioita sekä ajan, jonka
+ * pelilogiikka nukkuu yhdessä iteraatiossa.
+ *
+ * @author trusanen
+ * 
+ */
+public abstract class Game implements KeyListener {
     
     public ArrayList<GameObject> gameObjects;
     public ArrayList<KeyListener> controlledObjects;
@@ -19,4 +28,7 @@ public abstract class Game implements Runnable, KeyListener {
         controlledObjects = new ArrayList<>();
         sleepAmount = 30;
     }
+    
+    public abstract int run();
+    
 }

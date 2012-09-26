@@ -27,7 +27,7 @@ public class Pong {
         JDialog dialog = new JDialog();
         dialog.add(gameGUI);
         
-        dialog.setSize(300, 100);
+        dialog.setSize(500, 300);
 
         dialog.addWindowListener(new WindowAdapter() {
             @Override
@@ -43,7 +43,6 @@ public class Pong {
         Thread logicThread = new Thread(gameLogic);
         
         logicThread.start();
-        
     }
 
 }

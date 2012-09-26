@@ -4,9 +4,9 @@
  */
 package pong;
 
-import org.junit.Test;
-
+import CollisionClasses.Rectangle;
 import static org.junit.Assert.*;
+import org.junit.Test;
 
 /**
  *
@@ -19,16 +19,12 @@ public class RectangleTest {
     @Test
     public void testSetCoordinates() {
         
-        double[] rectCoordinates = new double[4];
+        Rectangle rect1 = new Rectangle(0, 2, 2, 2);
         
-        rectCoordinates[0] = 0;
-        rectCoordinates[1] = 2;
-        rectCoordinates[2] = 2;
-        rectCoordinates[3] = 0;
-        
-        Rectangle rect1 = new Rectangle(rectCoordinates);
-        
-        assertEquals("Palautetut koordinaatit eivät ole samat kuin annetut!", rect1.getCoordinates(), rectCoordinates);
+        assertEquals("Palautetut koordinaatit eivät ole samat kuin annetut!", rect1.getCoordinates()[0], 0, delta);
+        assertEquals("Palautetut koordinaatit eivät ole samat kuin annetut!", rect1.getCoordinates()[1], 2, delta);
+        assertEquals("Palautetut koordinaatit eivät ole samat kuin annetut!", rect1.getCoordinates()[2], 2, delta);
+        assertEquals("Palautetut koordinaatit eivät ole samat kuin annetut!", rect1.getCoordinates()[3], 2, delta);
 
     }
     
@@ -79,17 +75,9 @@ public class RectangleTest {
         
         rect1.move(5, 5);
         
-        double[] newCoordinates = new double[4];
-        
-        newCoordinates[0] = 5;
-        newCoordinates[1] = 5;
-        newCoordinates[2] = 10;
-        newCoordinates[3] = 10;
-        
-        assertEquals("Neliö liikkuu väärään paikkaan!", rect1.getCoordinates()[0], newCoordinates[0], delta);
-        assertEquals("Neliö liikkuu väärään paikkaan!", rect1.getCoordinates()[1], newCoordinates[1], delta);
-        assertEquals("Neliö liikkuu väärään paikkaan!", rect1.getCoordinates()[2], newCoordinates[2], delta);
-        assertEquals("Neliö liikkuu väärään paikkaan!", rect1.getCoordinates()[3], newCoordinates[3], delta);
-               
+        assertEquals("Neliö liikkuu väärään paikkaan!", rect1.getCoordinates()[0], 5, delta);
+        assertEquals("Neliö liikkuu väärään paikkaan!", rect1.getCoordinates()[1], 5, delta);
+        assertEquals("Neliö liikkuu väärään paikkaan!", rect1.getCoordinates()[2], 5, delta);
+        assertEquals("Neliö liikkuu väärään paikkaan!", rect1.getCoordinates()[3], 5, delta);               
     }
 }

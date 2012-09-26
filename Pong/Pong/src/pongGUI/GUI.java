@@ -7,7 +7,7 @@ package pongGUI;
 import java.awt.Graphics;
 import java.util.ArrayList;
 import javax.swing.*;
-import pong.GameObject;
+import GameClasses.GameObject;
 
 /**
  *

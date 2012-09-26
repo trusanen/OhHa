@@ -4,13 +4,10 @@
  */
 package pong;
 
+import GameClasses.GameObject;
 import java.awt.event.KeyListener;
 import java.util.ArrayList;
 
-/**
- *
- * @author trusanen
- */
 public abstract class Game implements Runnable, KeyListener {
     
     public ArrayList<GameObject> gameObjects;
@@ -22,5 +19,4 @@ public abstract class Game implements Runnable, KeyListener {
         controlledObjects = new ArrayList<>();
         sleepAmount = 30;
     }
-
 }

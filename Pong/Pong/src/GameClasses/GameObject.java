@@ -2,10 +2,10 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package pong;
+package GameClasses;
 
+import CollisionClasses.Rectangle;
 import java.awt.Graphics;
-import java.awt.event.KeyListener;
 
 /**
  *
@@ -35,7 +35,7 @@ public abstract class GameObject extends Object {
     
     public abstract void update();
     public abstract void draw(Graphics g);
-    public abstract void collides();
+    public abstract void collides(GameObject other);
     
     public GameObject(double newx, double newy) {
         

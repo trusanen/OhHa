@@ -4,6 +4,10 @@
  */
 package pong;
 
+import GameClasses.Player1Paddle;
+import GameClasses.Paddle;
+import GameClasses.Ball;
+import GameClasses.GameObject;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.util.logging.Level;
@@ -49,7 +53,7 @@ public class HumVsCompGame extends Game {
 
             for(GameObject other : gameObjects) {
                 if(!obj.equals(other) && checkCollision(obj, other)) {
-                    obj.collides();
+                    obj.collides(other);
                 }
             }
         }

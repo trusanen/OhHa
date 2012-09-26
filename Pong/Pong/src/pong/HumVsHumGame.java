@@ -4,6 +4,12 @@
  */
 package pong;
 
+import GameClasses.Ball;
+import GameClasses.GameObject;
+import GameClasses.Goal;
+import GameClasses.Player1Paddle;
+import GameClasses.Player2Paddle;
+import GameClasses.Wall;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.util.logging.Level;
@@ -17,17 +23,26 @@ import pongGUI.GUI;
 public class HumVsHumGame extends Game {
     
     private GUI gameGUI;
+    private Goal player1Goal;
+    private Goal player2Goal;
     
     HumVsHumGame(GUI newGameGUI) {
         super();
         gameGUI = newGameGUI;
         
-        Player1Paddle player1 = new Player1Paddle(0, 0, 5, 50);
-        Player2Paddle player2 = new Player2Paddle(100, 0, 5, 50);
+        Player1Paddle player1 = new Player1Paddle(100, 125, 5, 50);
+        Player2Paddle player2 = new Player2Paddle(400, 125, 5, 50);
         
-        gameObjects.add(new Ball(45, 20, 10, 10));
+        player1Goal = new Goal(80, 50, 20, 210);
+        player2Goal = new Goal(405, 50, 20, 210);
+        
+        gameObjects.add(new Ball(250, 145, 10, 10));
         gameObjects.add(player1);
         gameObjects.add(player2);
+        gameObjects.add(new Wall(100, 50, 305, 5));
+        gameObjects.add(new Wall(100, 255, 305, 5));
+        gameObjects.add(player1Goal);
+        gameObjects.add(player2Goal);
         
         controlledObjects.add(player1);
         controlledObjects.add(player2);
@@ -38,7 +53,7 @@ public class HumVsHumGame extends Game {
         
         if(obj1.collisionRectangle.collidesWith(obj2.collisionRectangle) || obj2.collisionRectangle.collidesWith(obj1.collisionRectangle)) {
             return true;
-        }        
+        }
         return false;
     }
     
@@ -50,7 +65,7 @@ public class HumVsHumGame extends Game {
 
             for(GameObject other : gameObjects) {
                 if(!obj.equals(other) && checkCollision(obj, other)) {
-                    obj.collides();
+                    obj.collides(other);
                 }
             }
         }
@@ -67,21 +82,22 @@ public class HumVsHumGame extends Game {
         } catch (InterruptedException ex) {
             Logger.getLogger(HumVsCompGame.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
     }
 
     @Override
     public void run() {
         
-        while(true) {
+        while(player1Goal.getScore() < 5 && player2Goal.getScore() < 5) {
             
             updateObjects();
             
             drawObjects();
             
             sleep();
-
+            
         }
+        
+        System.out.println("Finished");
     }
 
     @Override

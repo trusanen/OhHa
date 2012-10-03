@@ -52,13 +52,13 @@ public class HumVsCompGame extends Game {
     }
     
     @Override
-    public boolean checkIfGameEnds() {
+    public int checkIfGameEnds() {
         
-        if(player1Goal.getScore() > 4 || player2Goal.getScore() < 4) {
-            return true;
+        if(player1Goal.getScore() > 4 || player2Goal.getScore() > 4) {
+            return 1;
         }
         
-        return false;
+        return 0;
     }
 
     @Override

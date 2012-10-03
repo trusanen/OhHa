@@ -5,15 +5,11 @@
 package pong;
 
 import GameClasses.Ball;
-import GameClasses.GameObject;
+import GameClasses.Bonus;
 import GameClasses.Goal;
 import GameClasses.Player1Paddle;
 import GameClasses.Player2Paddle;
 import GameClasses.Wall;
-import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import pongGUI.GUI;
 
 /**
@@ -42,32 +38,41 @@ public class HumVsHumGame extends Game {
     }
     
     @Override
-    public boolean checkIfGameEnds() {
+    public int run() {
         
-        if(player1Goal.getScore() > 4 || player2Goal.getScore() > 4) {
-            return true;
+        int state = 0;
+        
+        while(state == 0) {
+            
+            if(Math.random() < 0.1) {
+                createObject(new Bonus(130 + Math.random()*235, 60 + Math.random()*130, 10, 10));
+            }
+            
+            updateObjects();
+            
+            drawObjects();
+            
+            addObjects();
+            
+            removeObjects();
+            
+            sleep();
+            
+            state = checkIfGameEnds();
+            
         }
         
-        return false;
+        return state;
     }
-
+    
     @Override
-    public void keyTyped(KeyEvent e) {
+    public int checkIfGameEnds() {
         
-    }
-
-    @Override
-    public void keyPressed(KeyEvent e) {
-        for(KeyListener obj : controlledObjects) {
-            obj.keyPressed(e);
+        if(player1Goal.getScore() > 20 || player2Goal.getScore() > 20) {
+            return 1;
         }
-    }
-
-    @Override
-    public void keyReleased(KeyEvent e) {
-        for(KeyListener obj : controlledObjects) {
-            obj.keyReleased(e);
-        }
+        
+        return 0;
     }
     
 }

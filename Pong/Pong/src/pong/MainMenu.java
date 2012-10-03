@@ -6,7 +6,6 @@ package pong;
 
 import GameClasses.MenuSelection;
 import GameClasses.MenuText;
-import java.awt.event.KeyEvent;
 import pongGUI.GUI;
 
 /**
@@ -15,6 +14,8 @@ import pongGUI.GUI;
  */
 public class MainMenu extends Game {
     
+    public MenuSelection selection;
+    
     MainMenu(GUI newGameGUI) {
         super();
         
@@ -22,27 +23,11 @@ public class MainMenu extends Game {
         createObject(new MenuText(100, 100, "1 Pelaajan peli"));
         createObject(new MenuText(100, 150, "2 Pelaajan peli"));
         createObject(new MenuText(100, 200, "Lopeta"));
-        createObject(new MenuSelection(80, 100));
+        selection = (MenuSelection)createObject(new MenuSelection(80, 100));
     }
 
     @Override
-    public boolean checkIfGameEnds() {
-        return false;
-    }
-
-    @Override
-    public void keyTyped(KeyEvent e) {
-        
-    }
-
-    @Override
-    public void keyPressed(KeyEvent e) {
-        
-    }
-
-    @Override
-    public void keyReleased(KeyEvent e) {
-        
-    }
-    
+    public int checkIfGameEnds() {
+        return selection.getChoice();
+    }    
 }

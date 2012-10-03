@@ -5,6 +5,7 @@
 package pong;
 
 import GameClasses.GameObject;
+import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.util.ArrayList;
 import java.util.logging.Level;
@@ -25,29 +26,41 @@ public abstract class Game implements KeyListener {
     public GUI gameGUI;
     public ArrayList<GameObject> gameObjects;
     public ArrayList<KeyListener> controlledObjects;
+    public ArrayList<GameObject> addedObjects;
+    public ArrayList<GameObject> removedObjects;
     public int sleepAmount;
     
     Game() {
         gameObjects = new ArrayList<>();
         controlledObjects = new ArrayList<>();
+        addedObjects = new ArrayList<>();
+        removedObjects = new ArrayList<>();
         sleepAmount = 30;
     }
     
-    public abstract boolean checkIfGameEnds();
+    public abstract int checkIfGameEnds();
     
     public int run() {
         
-        while(!checkIfGameEnds()) {
+        int state = 0;
+        
+        while(state == 0) {
             
             updateObjects();
             
             drawObjects();
             
+            addObjects();
+            
+            removeObjects();
+            
             sleep();
+            
+            state = checkIfGameEnds();
             
         }
         
-        return 0;
+        return state;
     }
             
     private boolean checkCollision(GameObject obj1, GameObject obj2) {
@@ -76,6 +89,33 @@ public abstract class Game implements KeyListener {
         gameGUI.drawObjects(gameObjects);
     }
     
+    public void addObjects() {
+        
+        for(GameObject obj : addedObjects) {
+            gameObjects.add(obj);
+            
+            if(obj instanceof KeyListener) {
+                controlledObjects.add((KeyListener)obj);
+            }
+        }
+        
+        addedObjects.clear();
+        
+    }
+    
+    public void removeObjects() {
+        
+        for(GameObject obj : removedObjects) {
+            gameObjects.remove(obj);
+
+            if(obj instanceof KeyListener) {
+                controlledObjects.remove((KeyListener)obj);
+            }
+        }
+
+        removedObjects.clear();
+    }
+    
     public void sleep() {
         
         try {
@@ -85,15 +125,37 @@ public abstract class Game implements KeyListener {
         }
     }
     
+    @Override
+    public void keyTyped(KeyEvent e) {
+        
+    }
+
+    @Override
+    public void keyPressed(KeyEvent e) {
+        for(KeyListener obj : controlledObjects) {
+            obj.keyPressed(e);
+        }
+    }
+
+    @Override
+    public void keyReleased(KeyEvent e) {
+        for(KeyListener obj : controlledObjects) {
+            obj.keyReleased(e);
+        }
+    }
+    
     public GameObject createObject(GameObject obj) {
-        gameObjects.add(obj);
+        
+        addedObjects.add(obj);
         obj.setGame(this);
         
-        if(obj instanceof KeyListener) {
-            controlledObjects.add((KeyListener)obj);
-        }
-        
         return obj;
+    }
+    
+    public void removeObject(GameObject obj) {
+        
+        removedObjects.add(obj);
+        
     }
     
 }

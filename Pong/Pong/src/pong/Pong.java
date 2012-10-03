@@ -25,7 +25,7 @@ public class Pong {
      */
     public static void main(String[] args) {
         
-        int state = 1;
+        int state = 0;
         
         GUI gameGUI = new GUI();
         Game gameLogic = new MainMenu(gameGUI);
@@ -46,8 +46,24 @@ public class Pong {
         
         dialog.setVisible(true);
         
-        while(state != 0) {
+        while(state != 4) {
             state = gameLogic.run();
+            
+            if(state == 1) {
+                dialog.removeKeyListener(gameLogic);
+                gameLogic = new MainMenu(gameGUI);
+                dialog.addKeyListener(gameLogic);
+            }
+            if(state == 2) {
+                dialog.removeKeyListener(gameLogic);
+                gameLogic = new HumVsCompGame(gameGUI);
+                dialog.addKeyListener(gameLogic);
+            }
+            if(state == 3) {
+                dialog.removeKeyListener(gameLogic);
+                gameLogic = new HumVsHumGame(gameGUI);
+                dialog.addKeyListener(gameLogic);
+            }
         }
         
         dialog.dispose();

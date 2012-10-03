@@ -14,16 +14,38 @@ import java.awt.event.KeyListener;
  */
 public class MenuSelection extends GameObject implements KeyListener {
     
-    // VIIMEISTELE TÄMÄ!
-    
-    int state;
-    boolean stayPut;
+    private int state;
+    private boolean stayPut;
+    private boolean choiceMade;
     
     public MenuSelection(double x, double y) {
         super(x, y);
         
         stayPut = false;
-        state = 1;
+        state = 2;
+        choiceMade = false;
+    }
+    
+    public int getChoice() {
+        if(choiceMade) {
+            return state;
+        }
+        
+        return 0;
+    }
+    
+    private void changePlace(int state) {
+        
+        if(state == 2) {
+            setCoordinates(80, 100);
+        }
+        if(state == 3) {
+            setCoordinates(80, 150);
+        }
+        if(state == 4) {
+            setCoordinates(80, 200);
+        }        
+        
     }
 
     @Override
@@ -43,28 +65,33 @@ public class MenuSelection extends GameObject implements KeyListener {
 
     @Override
     public void keyTyped(KeyEvent e) {
-        throw new UnsupportedOperationException("Not supported yet.");
+        
     }
 
     @Override
     public void keyPressed(KeyEvent e) {
-        
         if(e.getKeyChar() == 'w') {
-            if(!stayPut && state < 1) {
+            if(!stayPut && state > 2) {
                 state -= 1;
+                changePlace(state);
+                stayPut = true;
             }
         }
         if(e.getKeyChar() == 's') {
-            if(!stayPut && state < 3) {
+            if(!stayPut && state < 4) {
                 state += 1;
+                changePlace(state);
+                stayPut = true;
             }
         }
-        
+        if(e.getKeyCode() == 10) {
+            choiceMade = true;
+        }
     }
 
     @Override
     public void keyReleased(KeyEvent e) {
-        
+        stayPut = false;
     }
     
 }

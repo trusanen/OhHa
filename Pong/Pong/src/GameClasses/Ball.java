@@ -16,10 +16,12 @@ public class Ball extends GameObject {
     
     private double width;
     private double height;
+    private static int numberOfBalls = 0;
     
     public Ball(double x, double y, double width, double height) {
         
         super(x, y, width, height);
+        numberOfBalls += 1;
         
         this.width = width;
         this.height = height;
@@ -93,47 +95,57 @@ public class Ball extends GameObject {
     @Override
     public void collides(GameObject other) {
         
-        x = oldx;
-        y = oldy;
-
-        collisionRectangle.setCoordinates(oldx, oldy);
-        
-        if(other instanceof Paddle) {
+        if(!((other instanceof Bonus) || (other instanceof Ball))) {
             
-            speedx = changeXDirection();
-            speedy = calculateBounceAngle(other);
-            
-        }
-        if(other instanceof Wall) {
             x = oldx;
             y = oldy;
 
             collisionRectangle.setCoordinates(oldx, oldy);
 
-            speedy = -speedy;
-            
-        }
-        if(other instanceof Goal) {
-            other.collides(this);
-            
-            setCoordinates(250, 145);
-            
-            collisionRectangle.setCoordinates(250, 145);
-            
-            double rnd = Math.random();
-        
-            if(rnd < 0.5) {
-                speedx = 2.5;
-            }
-            else {
-                speedx = -2.5;
-            }
+            if(other instanceof Paddle) {
 
-            if(rnd < 0.5) {
-                speedy = Math.random() * 2;
+                speedx = changeXDirection();
+                speedy = calculateBounceAngle(other);
+
             }
-            else {
-                speedy = -Math.random() * 2;
+            if(other instanceof Wall) {
+                x = oldx;
+                y = oldy;
+
+                collisionRectangle.setCoordinates(oldx, oldy);
+
+                speedy = -speedy;
+
+            }
+            if(other instanceof Goal) {
+                other.collides(this);
+
+                if(numberOfBalls < 2) {
+                
+                    setCoordinates(250, 145);
+
+                    collisionRectangle.setCoordinates(250, 145);
+
+                    double rnd = Math.random();
+
+                    if(rnd < 0.5) {
+                        speedx = 2.5;
+                    }
+                    else {
+                        speedx = -2.5;
+                    }
+
+                    if(rnd < 0.5) {
+                        speedy = Math.random() * 2;
+                    }
+                    else {
+                        speedy = -Math.random() * 2;
+                    }
+                }
+                else {
+                    numberOfBalls -= 1;
+                    game.removeObject(this);
+                }
             }
         }
     }

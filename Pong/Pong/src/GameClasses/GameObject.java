@@ -6,6 +6,7 @@ package GameClasses;
 
 import CollisionClasses.Rectangle;
 import java.awt.Graphics;
+import pong.Game;
 
 /**
  * Abstrakti peliolio-yläluokka. Paikkamäärittelyt,
@@ -15,6 +16,10 @@ import java.awt.Graphics;
  */
 public abstract class GameObject extends Object {
     
+    private static int objectIds = 1000;
+    
+    public int objectId;
+    public Game game;
     public double x;
     public double y;
     public double oldx;
@@ -23,40 +28,39 @@ public abstract class GameObject extends Object {
     public double speedy;
     public Rectangle collisionRectangle;
     
-    public GameObject() {
-        
-        x = 0;
-        y = 0;
-        oldx = 0;
-        oldy = 0;
-        speedx = 0;
-        speedy = 0;
-        collisionRectangle = new Rectangle(0, 0, 0, 0);
-        
-    }
-    
     public abstract void update();
     public abstract void draw(Graphics g);
     public abstract void collides(GameObject other);
     
-    public GameObject(double newx, double newy) {
+    public GameObject(double x, double y) {
         
-        x = newx;
-        y = newy;
-        oldx = newx;
-        oldy = newy;
-        collisionRectangle = new Rectangle(newx, newy, 0, 0);
+        setObjectId();
+        
+        this.x = x;
+        this.y = y;
+        oldx = x;
+        oldy = y;
+        collisionRectangle = new Rectangle(x, y, 0, 0);
         
     }
     
     public GameObject(double newx, double newy, double width, double height) {
         
+        setObjectId();
         x = newx;
         y = newy;
         oldx = newx;
         oldy = newy;
         collisionRectangle = new Rectangle(newx, newy, width, height);
-        
+    }
+    
+    private void setObjectId() {
+        objectId = objectIds;
+        objectIds += 1;
+    }
+    
+    public int getObjectId() {
+        return objectId;
     }
     
     public double[] getCoordinates() {
@@ -95,6 +99,10 @@ public abstract class GameObject extends Object {
     
     public void setRectangle(Rectangle rect) {
         collisionRectangle = rect;
+    }
+    
+    public void setGame(Game game) {
+        this.game = game;
     }
     
     public void move() {

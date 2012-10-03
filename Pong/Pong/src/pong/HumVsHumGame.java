@@ -24,7 +24,6 @@ import pongGUI.GUI;
  */
 public class HumVsHumGame extends Game {
     
-    private GUI gameGUI;
     private Goal player1Goal;
     private Goal player2Goal;
     
@@ -32,74 +31,24 @@ public class HumVsHumGame extends Game {
         super();
         gameGUI = newGameGUI;
         
-        Player1Paddle player1 = new Player1Paddle(100, 125, 10, 50);
-        Player2Paddle player2 = new Player2Paddle(395, 125, 10, 50);
-        
-        player1Goal = new Goal(80, 50, 20, 210);
-        player2Goal = new Goal(405, 50, 20, 210);
-        
-        gameObjects.add(new Ball(250, 145, 10, 10));
-        gameObjects.add(player1);
-        gameObjects.add(player2);
-        gameObjects.add(new Wall(100, 50, 305, 5));
-        gameObjects.add(new Wall(100, 255, 305, 5));
-        gameObjects.add(player1Goal);
-        gameObjects.add(player2Goal);
-        
-        controlledObjects.add(player1);
-        controlledObjects.add(player2);
+        createObject(new Ball(250, 145, 10, 10));
+        createObject(new Player1Paddle(100, 125, 10, 50));
+        createObject(new Player2Paddle(395, 125, 10, 50));
+        createObject(new Wall(100, 50, 305, 5));
+        createObject(new Wall(100, 255, 305, 5));
+        player1Goal = (Goal)createObject(new Goal(80, 50, 20, 210));
+        player2Goal = (Goal)createObject(new Goal(405, 50, 20, 210));
         
     }
     
-    private boolean checkCollision(GameObject obj1, GameObject obj2) {
+    @Override
+    public boolean checkIfGameEnds() {
         
-        if(obj1.collisionRectangle.collidesWith(obj2.collisionRectangle) || obj2.collisionRectangle.collidesWith(obj1.collisionRectangle)) {
+        if(player1Goal.getScore() > 4 || player2Goal.getScore() > 4) {
             return true;
         }
+        
         return false;
-    }
-    
-    public void updateObjects() {
-        
-        for(GameObject obj : gameObjects) {
-
-            obj.update();
-
-            for(GameObject other : gameObjects) {
-                if(!obj.equals(other) && checkCollision(obj, other)) {
-                    obj.collides(other);
-                }
-            }
-        }
-    }
-    
-    public void drawObjects() {
-        gameGUI.drawObjects(gameObjects);
-    }
-    
-    public void sleep() {
-        
-        try {
-            Thread.sleep(sleepAmount);
-        } catch (InterruptedException ex) {
-            Logger.getLogger(HumVsCompGame.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    }
-
-    @Override
-    public int run() {
-        
-        while(player1Goal.getScore() < 5 && player2Goal.getScore() < 5) {
-            
-            updateObjects();
-            
-            drawObjects();
-            
-            sleep();
-            
-        }
-        
-        return 0;
     }
 
     @Override

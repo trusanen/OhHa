@@ -62,18 +62,31 @@ public class Rectangle {
         double otherWidth = otherCoordinates[2];
         double otherHeight = otherCoordinates[3];
         
-        if (x <= otherx + otherWidth && 
-                y <= othery + otherHeight && 
-                x >= otherx && 
-                y >= othery) {
+        if ((x <= (otherx + otherWidth)) && 
+                (y <= (othery + otherHeight)) && 
+                (x >= otherx) && 
+                (y >= othery)) {
             return true;
         }
-        if (x + width >= otherx && 
-                y + height >= othery && 
-                x + width <= otherx + otherWidth && 
-                y + height <= othery + otherHeight) {
+        if((x + width <= (otherx + otherWidth)) &&
+                (x + width >= otherx) &&
+                y <= (othery + otherHeight) &&
+                y >= othery){
             return true;
         }
+        if (((x + width) >= otherx) && 
+                ((y + height) >= othery) && 
+                ((x + width) <= (otherx + otherWidth)) && 
+                ((y + height) <= (othery + otherHeight))) {
+            return true;
+        }
+        if (x <= (otherx + otherWidth) &&
+                x >= otherx &&
+                (y + height) <= (othery + otherHeight) &&
+                (y + height) >= othery) {
+            return true;
+        }
+        
         
         return false;
         

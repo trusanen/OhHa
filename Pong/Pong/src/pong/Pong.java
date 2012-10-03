@@ -28,7 +28,7 @@ public class Pong {
         int state = 1;
         
         GUI gameGUI = new GUI();
-        Game gameLogic = new HumVsCompGame(gameGUI);
+        Game gameLogic = new MainMenu(gameGUI);
 
         JDialog dialog = new JDialog();
         dialog.add(gameGUI);
@@ -46,7 +46,9 @@ public class Pong {
         
         dialog.setVisible(true);
         
-        state = gameLogic.run();
+        while(state != 0) {
+            state = gameLogic.run();
+        }
         
         dialog.dispose();
         

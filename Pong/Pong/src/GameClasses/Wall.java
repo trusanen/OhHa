@@ -20,6 +20,7 @@ public class Wall extends GameObject {
     
     public Wall(double newx, double newy, double width, double height) {
         super(newx, newy, width, height);
+        
         this.width = width;
         this.height = height;
     }

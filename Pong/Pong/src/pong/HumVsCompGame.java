@@ -23,8 +23,7 @@ import pongGUI.GUI;
  * @author trusanen
  */
 public class HumVsCompGame extends Game {
-    
-    private GUI gameGUI;
+
     private Goal player1Goal;
     private Goal player2Goal;
     
@@ -52,55 +51,14 @@ public class HumVsCompGame extends Game {
         
     }
     
-    private boolean checkCollision(GameObject obj1, GameObject obj2) {
+    @Override
+    public boolean checkIfGameEnds() {
         
-        if(obj1.collisionRectangle.collidesWith(obj2.collisionRectangle) || obj2.collisionRectangle.collidesWith(obj1.collisionRectangle)) {
+        if(player1Goal.getScore() > 4 || player2Goal.getScore() < 4) {
             return true;
         }
+        
         return false;
-    }
-    
-    public void updateObjects() {
-        
-        for(GameObject obj : gameObjects) {
-
-            obj.update();
-
-            for(GameObject other : gameObjects) {
-                if(!obj.equals(other) && checkCollision(obj, other)) {
-                    obj.collides(other);
-                }
-            }
-        }
-    }
-    
-    public void drawObjects() {
-        gameGUI.drawObjects(gameObjects);
-    }
-    
-    public void sleep() {
-        
-        try {
-            Thread.sleep(sleepAmount);
-        } catch (InterruptedException ex) {
-            Logger.getLogger(HumVsCompGame.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    }
-
-    @Override
-    public int run() {
-        
-        while(player1Goal.getScore() < 5 && player2Goal.getScore() < 5) {
-            
-            updateObjects();
-            
-            drawObjects();
-            
-            sleep();
-            
-        }
-        
-        return 0;
     }
 
     @Override

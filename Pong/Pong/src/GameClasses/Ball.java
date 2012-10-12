@@ -14,17 +14,71 @@ import java.awt.Graphics;
  */
 public class Ball extends GameObject {
     
+    private Paddle owner;
     private double width;
     private double height;
     private static int numberOfBalls = 0;
     
-    public Ball(double x, double y, double width, double height) {
+    /**
+     * 
+     *
+     * @param topLeftx Uusi vasemman yläkulman x-koordinaatti.
+     * @param topLefty Uusi vasemman yläkulman y-koordinaatti.
+     * @param width Pallon leveys.
+     * @param height Pallon korkeus
+     */
+    public Ball(double topLeftx, double topLefty, double width, double height) {
         
-        super(x, y, width, height);
+        super(topLeftx, topLefty, width, height);
         numberOfBalls += 1;
         
         this.width = width;
         this.height = height;
+        
+        randomizeStartingSpeed();
+        
+    }
+    
+    /**
+     *
+     * @return Viimeksi palloon osunut maila, voi olla myös NULL.
+     */
+    public Paddle getOwner() {
+        return owner;
+    }
+    
+    /**
+     *
+     * @return Pallon mitat, leveys ja korkeus.
+     */
+    public double[] getMeasures() {
+        
+        double[] ballMeasures = new double[2];
+        
+        ballMeasures[0] = width;
+        ballMeasures[1] = height;
+        
+        return ballMeasures;
+    }
+    
+    /**
+     *
+     * @return Kuinka monta palloa on pelissä?
+     */
+    public int getNumberOfBalls() {
+        return numberOfBalls;
+    }
+    
+    /**
+     * 
+     * Laittaa pallojen määräksi nolla, kun peli loppuu.
+     *
+     */
+    public static void clearNumberOfBalls() {
+        numberOfBalls = 0;
+    }
+    
+    private void randomizeStartingSpeed() {
         
         double rnd = Math.random();
         
@@ -44,16 +98,24 @@ public class Ball extends GameObject {
         
     }
     
-    public double[] getMeasures() {
+    /**
+     *
+     */
+    public void createParticle() {
         
-        double[] ballMeasures = new double[2];
+        Particle particle = new Particle(x + (Math.random() * width), y + (Math.random() * height));
         
-        ballMeasures[0] = width;
-        ballMeasures[1] = height;
+        game.createObject(particle);
         
-        return ballMeasures;
+        particle.setSpeed(-(0.5 * speedx - 0.1) + Math.random() * 0.2, -(0.5 * speedy - 0.1) + Math.random() * 0.2);
+        
     }
     
+    /**
+     *
+     * @param other
+     * @return
+     */
     public double calculateBounceAngle(GameObject other) {
         
         double othery = other.getRectangle().getCoordinates()[1];
@@ -71,6 +133,10 @@ public class Ball extends GameObject {
         
     }
     
+    /**
+     *
+     * @return
+     */
     public double changeXDirection() {
         
         if(speedx > 0) {
@@ -82,20 +148,35 @@ public class Ball extends GameObject {
         
     }
     
+    /**
+     *
+     * @param g
+     */
     @Override
     public void draw(Graphics g) {
         g.drawOval((int)x, (int)y, (int)width, (int)height);
     }
 
+    /**
+     *
+     */
     @Override
     public void update() {
         move();
+        
+        if(Math.random() < 0.5) {
+            createParticle();
+        }
     }
 
+    /**
+     *
+     * @param other
+     */
     @Override
     public void collides(GameObject other) {
         
-        if(!((other instanceof Bonus) || (other instanceof Ball))) {
+        if(!((other instanceof Bonus) || (other instanceof Ball) || (other instanceof Particle))) {
             
             x = oldx;
             y = oldy;
@@ -104,49 +185,58 @@ public class Ball extends GameObject {
 
             if(other instanceof Paddle) {
 
-                speedx = changeXDirection();
-                speedy = calculateBounceAngle(other);
+                collideWithPaddle((Paddle)other);
 
             }
             if(other instanceof Wall) {
-                x = oldx;
-                y = oldy;
-
-                collisionRectangle.setCoordinates(oldx, oldy);
-
-                speedy = -speedy;
+                
+                collideWithWall((Wall)other);
 
             }
             if(other instanceof Goal) {
-                other.collides(this);
-
-                if(numberOfBalls < 2) {
                 
-                    setCoordinates(250, 145);
+                collideWithGoal((Goal)other);
 
-                    collisionRectangle.setCoordinates(250, 145);
-
-                    double rnd = Math.random();
-
-                    if(rnd < 0.5) {
-                        speedx = 2.5;
-                    }
-                    else {
-                        speedx = -2.5;
-                    }
-
-                    if(rnd < 0.5) {
-                        speedy = Math.random() * 2;
-                    }
-                    else {
-                        speedy = -Math.random() * 2;
-                    }
-                }
-                else {
-                    numberOfBalls -= 1;
-                    game.removeObject(this);
-                }
             }
         }
+    }
+    
+    private void collideWithPaddle(Paddle other) {
+        
+        speedx = changeXDirection();
+        speedy = calculateBounceAngle(other);
+
+        owner = (Paddle)other;        
+        
+    }
+    
+    private void collideWithWall(Wall other) {
+        
+        x = oldx;
+        y = oldy;
+
+        collisionRectangle.setCoordinates(oldx, oldy);
+
+        speedy = -speedy;
+        
+    }
+    
+    private void collideWithGoal(Goal other) {
+        
+        other.collides(this);
+
+        if(numberOfBalls < 2) {
+
+            setCoordinates(250, 145);
+            collisionRectangle.setCoordinates(250, 145);
+
+            randomizeStartingSpeed();
+            
+        }
+        else {
+            numberOfBalls -= 1;
+            game.removeObject(this);
+        }
+        
     }
 }

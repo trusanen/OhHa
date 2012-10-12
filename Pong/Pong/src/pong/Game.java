@@ -4,6 +4,7 @@
  */
 package pong;
 
+import GameClasses.Ball;
 import GameClasses.GameObject;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
@@ -14,21 +15,40 @@ import pongGUI.GUI;
 
 /**
  * 
- * Abstrakti yläluokka, sisältää listat GameObject
- * -olioita ja KeyListener-olioita sekä ajan, jonka
- * pelilogiikka nukkuu yhdessä iteraatiossa.
+ * Abstrakti pelien yläluokka, sisältää pelioliot sekä ohjatut
+ * oliot, ajan, jonka logiikka nukkuu yhdessä iteraatiossa sekä
+ * yleistä toiminnallisuutta pelilogiikan silmukasta olioiden
+ * luomiseen ja tuhoamiseen.
  *
  * @author trusanen
  * 
  */
 public abstract class Game implements KeyListener {
     
-    public GUI gameGUI;
-    public ArrayList<GameObject> gameObjects;
-    public ArrayList<KeyListener> controlledObjects;
-    public ArrayList<GameObject> addedObjects;
-    public ArrayList<GameObject> removedObjects;
-    public int sleepAmount;
+    /**
+     * Graafinen käyttöliittymä.
+     */
+    protected GUI gameGUI;
+    /**
+     * Kaikkien peliolioiden lista.
+     */
+    protected ArrayList<GameObject> gameObjects;
+    /**
+     * Ohjattujen peliolioiden lista.
+     */
+    protected ArrayList<KeyListener> controlledObjects;
+    /**
+     * Pelioliot, jotka ovat juuri tietyllä iteraatiolla luotu.
+     */
+    protected ArrayList<GameObject> addedObjects;
+    /**
+     * Pelioliot, jotka ovat juuri tietyllä iteraatiolla tuhottu.
+     */
+    protected ArrayList<GameObject> removedObjects;
+    /**
+     * Kuinka paljon pelisilmukka nukkuu joka iteraatiolla.
+     */
+    protected int sleepAmount;
     
     Game() {
         gameObjects = new ArrayList<>();
@@ -38,8 +58,26 @@ public abstract class Game implements KeyListener {
         sleepAmount = 30;
     }
     
-    public abstract int checkIfGameEnds();
+    /**
+     *
+     * @return Palauttaa tilan, johon ohjelma siirtyy pelisilmukan loputtua.
+     */
+    protected abstract int checkIfGameEnds();
     
+    /**
+     * 
+     * Default pelisilmukka. Normaalisti pelisilmukka etenee seuraavasti:
+     * 1. Oliot päivitetään.
+     * 2. Oliot piirretään.
+     * 3. Luodut oliot siirretään addedObjects-listasta gameObjects listaan.
+     * 4. Poistetut oliot poistetaan gameObjects-listasta
+     * 5. Tutkitaan, loppuiko peli
+     * 6. Nukutaan tietty määrä.
+     *
+     * @return Silmukka kutsuu checkIfGameEnds()-metodia ja palauttaa siitä saadun tilan.
+     * 
+     * @see pong.Game#checkIfGameEnds() 
+     */
     public int run() {
         
         int state = 0;
@@ -54,9 +92,9 @@ public abstract class Game implements KeyListener {
             
             removeObjects();
             
-            sleep();
-            
             state = checkIfGameEnds();
+            
+            sleep();
             
         }
         
@@ -65,13 +103,17 @@ public abstract class Game implements KeyListener {
             
     private boolean checkCollision(GameObject obj1, GameObject obj2) {
         
-        if(obj1.collisionRectangle.collidesWith(obj2.collisionRectangle) || obj2.collisionRectangle.collidesWith(obj1.collisionRectangle)) {
+        if(obj1.getRectangle().collidesWith(obj2.getRectangle()) || obj2.getRectangle().collidesWith(obj1.getRectangle())) {
             return true;
         }
         return false;
     }
     
-    public void updateObjects() {
+    /**
+     * Käy läpi kaikki oliot gameObjects listasta, päivittää niiden tilan
+     * ja tutkii, törmäävätkö ne.
+     */
+    protected void updateObjects() {
         
         for(GameObject obj : gameObjects) {
 
@@ -85,11 +127,18 @@ public abstract class Game implements KeyListener {
         }
     }
     
-    public void drawObjects() {
+    /**
+     * Käy läpi kaikki oliot gameObjects-listasta ja piirtää ne.
+     */
+    protected void drawObjects() {
         gameGUI.drawObjects(gameObjects);
     }
     
-    public void addObjects() {
+    /**
+     * Käy läpi kaikki oliot addedObjects-listasta ja listää ne gameObjects-listaan.
+     * Jos oliota voi ohjata näppäimistöllä, metodi lisää ne myös controlledObjects-listaan.
+     */
+    protected void addObjects() {
         
         for(GameObject obj : addedObjects) {
             gameObjects.add(obj);
@@ -103,7 +152,11 @@ public abstract class Game implements KeyListener {
         
     }
     
-    public void removeObjects() {
+    /**
+     * Käy läpi kaikki oliot removedObjects-listasta ja poistaa ne gameObjects-listasta.
+     * Jos oliota voi ohjata näppäimistöllä, metodi poistaa ne myös controlledObjects-listasta.
+     */
+    protected void removeObjects() {
         
         for(GameObject obj : removedObjects) {
             gameObjects.remove(obj);
@@ -116,7 +169,10 @@ public abstract class Game implements KeyListener {
         removedObjects.clear();
     }
     
-    public void sleep() {
+    /**
+     * Pysäyttää ohjelman suorituksen hetken ajaksi.
+     */
+    protected void sleep() {
         
         try {
             Thread.sleep(sleepAmount);
@@ -125,11 +181,24 @@ public abstract class Game implements KeyListener {
         }
     }
     
+    /**
+     *
+     * Tällä hetkellä tyhjä.
+     * 
+     * @param e
+     */
     @Override
     public void keyTyped(KeyEvent e) {
         
     }
 
+    /**
+     *
+     * Käy läpi kaikki oliot controlledObjects-listasta ja ajaa niiden
+     * keyPressed-metodin.
+     * 
+     * @param e
+     */
     @Override
     public void keyPressed(KeyEvent e) {
         for(KeyListener obj : controlledObjects) {
@@ -137,6 +206,13 @@ public abstract class Game implements KeyListener {
         }
     }
 
+    /**
+     * 
+     * Käy läpi kaikki oliot controlledObjects-listasta ja ajaa niiden
+     * keyReleased-metodin.
+     *
+     * @param e
+     */
     @Override
     public void keyReleased(KeyEvent e) {
         for(KeyListener obj : controlledObjects) {
@@ -144,6 +220,14 @@ public abstract class Game implements KeyListener {
         }
     }
     
+    /**
+     *
+     * Lisää parametrina annetun olion addedObjects-listaan ja asettaa
+     * sen game-attribuutiksi tämän olion.
+     * 
+     * @param obj Uusi, juuri luotu olio.
+     * @return Palauttaa parametrina annetun olion
+     */
     public GameObject createObject(GameObject obj) {
         
         addedObjects.add(obj);
@@ -152,10 +236,15 @@ public abstract class Game implements KeyListener {
         return obj;
     }
     
+    /**
+     *
+     * Lisää parametrina annetun olion removedObjects-listaan.
+     * 
+     * @param obj
+     */
     public void removeObject(GameObject obj) {
         
         removedObjects.add(obj);
         
     }
-    
 }

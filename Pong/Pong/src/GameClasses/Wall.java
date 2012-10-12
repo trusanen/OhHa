@@ -18,8 +18,15 @@ public class Wall extends GameObject {
     private double width;
     private double height;
     
-    public Wall(double newx, double newy, double width, double height) {
-        super(newx, newy, width, height);
+    /**
+     *
+     * @param topLeftx Uusi vasemman yläkulman x-koordinaatti.
+     * @param topLefty Uusi vasemman yläkulman y-koordinaatti.
+     * @param width Muurin leveys.
+     * @param height Muurin korkeus.
+     */
+    public Wall(double topLeftx, double topLefty, double width, double height) {
+        super(topLeftx, topLefty, width, height);
         
         this.width = width;
         this.height = height;

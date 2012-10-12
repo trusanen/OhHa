@@ -8,14 +8,22 @@ import java.awt.Graphics;
 
 /**
  *
+ * Tekstiluokka. Piirtää annetun tekstin pelialueelle.
+ * 
  * @author trusanen
  */
 public class MenuText extends GameObject {
     
     private String menuText;
     
-    public MenuText(double x, double y, String text) {
-        super(x, y);
+    /**
+     *
+     * @param topLeftx Uusi vasemman yläkulman x-koordinaatti.
+     * @param topLefty Uusi vasemman yläkulman y-koordinaatti.
+     * @param text Piirrettävä teksti.
+     */
+    public MenuText(double topLeftx, double topLefty, String text) {
+        super(topLeftx, topLefty);
         
         menuText = text;
     }

@@ -46,7 +46,7 @@ public class Pong {
         
         dialog.setVisible(true);
         
-        while(state != 4) {
+        while(state != 5) {
             state = gameLogic.run();
             
             if(state == 1) {
@@ -62,6 +62,11 @@ public class Pong {
             if(state == 3) {
                 dialog.removeKeyListener(gameLogic);
                 gameLogic = new HumVsHumGame(gameGUI);
+                dialog.addKeyListener(gameLogic);
+            }
+            if(state == 4) {
+                dialog.removeKeyListener(gameLogic);
+                gameLogic = new SkitsoGame(gameGUI);
                 dialog.addKeyListener(gameLogic);
             }
         }

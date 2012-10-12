@@ -10,22 +10,32 @@ import java.awt.event.KeyListener;
 
 /**
  *
+ * Päävalikon valitsijaluokka. Valitsee, mikä
+ * peli pelataan ja
+ * 
  * @author trusanen
  */
 public class MenuSelection extends GameObject implements KeyListener {
     
     private int state;
-    private boolean stayPut;
     private boolean choiceMade;
     
-    public MenuSelection(double x, double y) {
-        super(x, y);
+    /**
+     *
+     * @param topLeftx Uusi vasemman yläkulman x-koordinaatti.
+     * @param topLefty Uusi vasemman yläkulman y-koordinaatti.
+     */
+    public MenuSelection(double topLeftx, double topLefty) {
+        super(topLeftx, topLefty);
         
-        stayPut = false;
         state = 2;
         choiceMade = false;
     }
     
+    /**
+     *
+     * @return Palauttaa, mikä valinta tehtiin.
+     */
     public int getChoice() {
         if(choiceMade) {
             return state;
@@ -40,11 +50,14 @@ public class MenuSelection extends GameObject implements KeyListener {
             setCoordinates(80, 100);
         }
         if(state == 3) {
-            setCoordinates(80, 150);
+            setCoordinates(80, 125);
         }
         if(state == 4) {
-            setCoordinates(80, 200);
-        }        
+            setCoordinates(80, 150);
+        }
+        if(state == 5) {
+            setCoordinates(80, 175);
+        }   
         
     }
 
@@ -63,35 +76,56 @@ public class MenuSelection extends GameObject implements KeyListener {
         
     }
 
+    /**
+     *
+     * @param e
+     */
     @Override
     public void keyTyped(KeyEvent e) {
         
     }
 
+    /**
+     *
+     * Napin painaminen alas. W-kirjainta painettaessa liikkuu
+     * ylöspäin, s-kirjainta painettaessa alas. Enter valitsee.
+     * 
+     * @param e
+     */
     @Override
     public void keyPressed(KeyEvent e) {
         if(e.getKeyChar() == 'w') {
-            if(!stayPut && state > 2) {
-                state -= 1;
-                changePlace(state);
-                stayPut = true;
-            }
+            moveUp();
         }
         if(e.getKeyChar() == 's') {
-            if(!stayPut && state < 4) {
-                state += 1;
-                changePlace(state);
-                stayPut = true;
-            }
+            moveDown();
         }
         if(e.getKeyCode() == 10) {
             choiceMade = true;
         }
     }
 
+    /**
+     * 
+     * @param e
+     */
     @Override
     public void keyReleased(KeyEvent e) {
-        stayPut = false;
     }
     
+    private void moveUp() {
+        
+        if(state > 2) {
+            state -= 1;
+            changePlace(state);
+        }
+    }
+    
+    private void moveDown() {
+        
+        if(state < 5) {
+            state += 1;
+            changePlace(state);
+        }
+    }
 }

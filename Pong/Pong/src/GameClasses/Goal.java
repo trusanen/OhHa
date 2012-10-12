@@ -5,7 +5,6 @@
 package GameClasses;
 
 import java.awt.Graphics;
-import pong.Game;
 
 /**
  * 
@@ -20,18 +19,32 @@ public class Goal extends GameObject {
     private double width;
     private double height;
     
-    public Goal(double newx, double newy, double width, double height) {
-        super(newx, newy, width, height);
+    /**
+     *
+     * @param topLeftx Uusi vasemman yläkulman x-koordinaatti.
+     * @param topLefty Uusi vasemman yläkulman y-koordinaatti.
+     * @param width Maalin leveys.
+     * @param height Maalin korkeus.
+     */
+    public Goal(double topLeftx, double topLefty, double width, double height) {
+        super(topLeftx, topLefty, width, height);
         
         this.width = width;
         this.height = height;
         score = 0;
     }
     
+    /**
+     *
+     * @return Palauttaa, kuinka monta maalia tähän maaliin on tehty.
+     */
     public int getScore() {
         return score;
     }
     
+    /**
+     * Lisää pisteitä yhdellä.
+     */
     public void score() {
         score += 1;
     }

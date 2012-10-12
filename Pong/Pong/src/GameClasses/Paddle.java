@@ -14,24 +14,57 @@ import java.awt.Graphics;
  */
 public class Paddle extends GameObject {
     
-    public double width;
-    public double height;
-    public Ball gameBall;
+
+    private double width;
+    private double height;
+    private Ball gameBall;
     
-    public Paddle(double x, double y, double width, double height) {
-        super(x, y, width, height);
+    /**
+     *
+     * @param topLeftx
+     * @param topLefty
+     * @param width
+     * @param height
+     */
+    public Paddle(double topLeftx, double topLefty, double width, double height) {
+        super(topLeftx, topLefty, width, height);
         this.width = width;
         this.height = height;
     }
     
-    public Paddle(double x, double y, double width, double height, Ball gameBall) {
-        super(x, y, width, height);
+    /**
+     *
+     * @param topLeftx
+     * @param topLefty
+     * @param width
+     * @param height
+     * @param gameBall
+     */
+    public Paddle(double topLeftx, double topLefty, double width, double height, Ball gameBall) {
+        super(topLeftx, topLefty, width, height);
         this.width = width;
         this.height = height;
         this.gameBall = gameBall;
     }
     
-    public void runAI() {
+    /**
+     * Kasvatus-metodi. Kasvattaa mailan ja sen törmäysneliön kokoa 5:llä ja 
+     * siirtää sen oikeaan paikkaan, jos se meinaa mennä seinien päälle.
+     */
+    public void grow() {
+        
+        if(height < 195) {
+            height = height + 5;
+
+            if((y + height) > 255) {
+                y = y - ((y + height) - 255);
+            }
+
+            collisionRectangle.grow();
+        }
+    }
+    
+    private void runAI() {
         if(gameBall != null) {
             if((gameBall.y + (gameBall.getMeasures()[1] / 2)) > (y + (height / 2))) {
                 speedy = 2;
@@ -59,11 +92,15 @@ public class Paddle extends GameObject {
 
     @Override
     public void collides(GameObject other) {
+        
         if(other instanceof Wall) {
-            y = oldy;
-            
-            collisionRectangle.setCoordinates(x, oldy);
+            collidesWithWall((Wall)other);
         }
     }
     
+    private void collidesWithWall(Wall other) {
+        
+            y = oldy;
+            collisionRectangle.setCoordinates(x, oldy);
+    }
 }

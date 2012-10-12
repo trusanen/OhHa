@@ -16,14 +16,31 @@ import java.awt.event.KeyListener;
  */
 public class Player1Paddle extends Paddle implements KeyListener {
     
+    /**
+     *
+     * @param newx
+     * @param newy
+     * @param width
+     * @param height
+     */
     public Player1Paddle(double newx, double newy, double width, double height) {
         super(newx, newy, width, height);
     }
     
+    /**
+     *
+     * @param e
+     */
     @Override
     public void keyTyped(KeyEvent e) {
     }
 
+    /**
+     * Painettaessa s-kirjainta, mailan nopeudeksi tulee 2,
+     * w-kirjainta painettaesssa -2.
+     * 
+     * @param e
+     */
     @Override
     public void keyPressed(KeyEvent e) {
         if(e.getKeyChar() == 's') {
@@ -34,6 +51,11 @@ public class Player1Paddle extends Paddle implements KeyListener {
         }
     }
 
+    /**
+     * Pysäyttää mailan, jos s- tai w-kirjain päästetään irti.
+     *
+     * @param e
+     */
     @Override
     public void keyReleased(KeyEvent e) {
         if(e.getKeyChar() == 's' || e.getKeyChar() == 'w') {

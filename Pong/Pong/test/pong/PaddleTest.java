@@ -22,26 +22,27 @@ public class PaddleTest {
         
         Paddle paddle1 = new Paddle(0, 0, 5, 20);
         
-        paddle1.speedy = 2;
+        paddle1.setSpeed(0, 2);
         
         paddle1.move();
         
-        assertEquals("Maila liikkuu väärään paikkaan!", paddle1.y, 2, delta);
+        assertEquals("Maila liikkuu väärään paikkaan!", paddle1.getCoordinates()[1], 2, delta);
         
     }
     
     @Test
     public void collidesWithWall() {
         
-        Paddle paddle1 = new Paddle(0, 0, 5, 20);
-        paddle1.oldy = 5;
+        Paddle paddle1 = new Paddle(0, 5, 5, 20);
+        paddle1.setSpeed(0, 5);
+        paddle1.move();
         
         Wall wall1 = new Wall(0, 0, 50, 5);
         
         paddle1.collides(wall1);
         
-        assertEquals("Maila ei liiku takaisinpäin!", paddle1.y, 5, delta);
-        assertEquals("Mailan törmäysneliö ei liiku takaisinpäin!", paddle1.collisionRectangle.getCoordinates()[1], 5, delta);
+        assertEquals("Maila ei liiku takaisinpäin!", paddle1.getCoordinates()[1], 5, delta);
+        assertEquals("Mailan törmäysneliö ei liiku takaisinpäin!", paddle1.getRectangle().getCoordinates()[1], 5, delta);
         
     }
 }

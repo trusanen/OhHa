@@ -27,8 +27,8 @@ public class BallTest {
         ball1.setSpeed(1, 1);
         ball1.move();
         
-        assertEquals("Pallo liikkuu väärään paikkaan!", ball1.x, 1, delta);
-        assertEquals("Pallo liikkuu väärään paikkaan!", ball1.y, 1, delta);
+        assertEquals("Pallo liikkuu väärään paikkaan!", ball1.getCoordinates()[0], 1, delta);
+        assertEquals("Pallo liikkuu väärään paikkaan!", ball1.getCoordinates()[1], 1, delta);
         
     }
     
@@ -44,7 +44,7 @@ public class BallTest {
     }
     
     @Test
-    public void changeXDirection() {
+    public void testChangeXDirection() {
         
         Ball ball1 = new Ball(0, 0, 10, 10);
         ball1.setSpeed(3, 0);
@@ -54,12 +54,11 @@ public class BallTest {
     }
     
     @Test
-    public void collidesWithPaddle() {
+    public void testCollidesWithPaddle() {
         
-        Ball ball1 = new Ball(0, 0, 10, 10);
+        Ball ball1 = new Ball(2, 0, 10, 10);
         ball1.setSpeed(-2, 1);
-        ball1.oldx = 2;
-        ball1.oldy = 0;
+        ball1.move();
         
         double y = 0;
         double height = 10;
@@ -73,12 +72,12 @@ public class BallTest {
         
         ball1.collides(paddle1);
         
-        assertEquals("Pallo ei liiku takaisinpäin!", ball1.x, 2, delta);
-        assertEquals("Pallo ei liiku takaisinpäin!", ball1.y, 0, delta);
-        assertEquals("Pallon törmäysneliö ei liiku takaisinpäin!", ball1.collisionRectangle.getCoordinates()[0], 2, delta);
-        assertEquals("Pallon törmäysneliö ei liiku takaisinpäin!", ball1.collisionRectangle.getCoordinates()[1], 0, delta);
-        assertEquals("Nopeus ei vaihdu oikein!", ball1.speedx, 2.2, delta);
-        assertEquals("Törmäyskulma on väärä!", ySpeed, ball1.speedy, delta);
+        assertEquals("Pallo ei liiku takaisinpäin!", ball1.getCoordinates()[0], 2, delta);
+        assertEquals("Pallo ei liiku takaisinpäin!", ball1.getCoordinates()[1], 0, delta);
+        assertEquals("Pallon törmäysneliö ei liiku takaisinpäin!", ball1.getRectangle().getCoordinates()[0], 2, delta);
+        assertEquals("Pallon törmäysneliö ei liiku takaisinpäin!", ball1.getRectangle().getCoordinates()[1], 0, delta);
+        assertEquals("Nopeus ei vaihdu oikein!", ball1.getSpeed()[0], 2.2, delta);
+        assertEquals("Törmäyskulma on väärä!", ySpeed, ball1.getSpeed()[1], delta);
         
     }
     

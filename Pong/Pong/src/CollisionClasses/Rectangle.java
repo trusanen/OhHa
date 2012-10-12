@@ -18,6 +18,13 @@ public class Rectangle {
     private double width;
     private double height;
     
+    /**
+     *
+     * @param topLeftx Neliön vasemman yläkulman x-koordinaatti
+     * @param topLefty Neliön vasemman yläkulman y-koordinaatti
+     * @param width Neliön leveys
+     * @param height Neliön korkeus
+     */
     public Rectangle(double topLeftx, double topLefty, double width, double height) {
         x = topLeftx;
         y = topLefty;
@@ -25,6 +32,10 @@ public class Rectangle {
         this.height = height;
     }
    
+    /**
+     *
+     * @return Koordinaatit sekä leveys ja korkeus
+     */
     public double[] getCoordinates() {
         
         double[] coordinates = new double[4];
@@ -37,22 +48,43 @@ public class Rectangle {
         return coordinates;
     }
     
-    public void setCoordinates(double newx, double newy) {
-        x = newx;
-        y = newy;
-    }
-    
-    public void setCoordinates(double topLeftx, double topLefty, double bottomRightx, double bottomRighty) {
+    /**
+     *
+     * @param topLeftx Uusi vasemman yläkulman x-koordinaatti
+     * @param topLefty Uusi vasemman yläkulman y-koordinaatti
+     */
+    public void setCoordinates(double topLeftx, double topLefty) {
         x = topLeftx;
         y = topLefty;
-        width = topLeftx - bottomRightx;
-        height = topLefty - bottomRighty;
     }
     
+    /**
+     *
+     * @param xDirection Kuinka paljon liikutaan x-suunnassa
+     * @param yDirection Kuinka paljon liikutaan y-suunnassa
+     */
     public void move(double xDirection, double yDirection) {
         setCoordinates(x + xDirection, y + yDirection);
     }
     
+    /**
+     * Kasvattaa neliön korkeutta viidellä ja siirtää neliön oikeaan kohtaan, 
+     * jos neliö on korkeampi kuin pelialue.
+     * Käytetään vain bonusten yhteydessä.
+     */
+    public void grow() {
+        height = height + 5;
+        
+        if((y + height) > 255) {
+            y = y - ((y + height) - 255);
+        }
+    }
+    
+    /**
+     *
+     * @param otherObject
+     * @return Törmääkö vai ei? True tai false.
+     */
     public boolean collidesWith(Rectangle otherObject) {
         
         double[] otherCoordinates = otherObject.getCoordinates();

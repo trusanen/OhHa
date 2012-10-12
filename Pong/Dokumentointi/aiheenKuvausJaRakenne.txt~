@@ -5,16 +5,35 @@ Aihe: Pong-peli
 Käyttäjät: Kuka tahansa
 
 -Toiminnot:
-	-Alkuvalikko, jossa valitaan yksin- tai kaksinpeli
+	-Alkuvalikko, jossa valitaan yksin- tai kaksinpeli, skitsopeli tai lopetus
 	-Itse peli
 		-Pelissä on kaksi mailaa ja pallo ja tavoitteena on saada lyötyä pallo
 		  toisen pelaajan mailan ohi
 			-Pallo kimpoilee pelialueen ylä- ja alaosassa olevista seinistä
+			-Pallo kiihdyttää vauhtia aina törmätessään mailaan
 		-Pisteiden lasku
-			-Peli palautuu alkuvalikkoon, jos toinen pelaaja saa n pistettä
+			-Peli palautuu alkuvalikkoon, jos toinen pelaaja saa pelistä riippuen 5-100 pistettä
 		-Yksinpeli
 			-Pelaaja ohjaa näppäimistöllä pelilautaa
 			-Vastustajana tekoäly, joka yrittää osua palloon
 		-Kaksinpeli
 			-Kaksi pelaajaa ohjaavat molemmat omia mailojaan näppäimistöllä
+		-Skitsopeli
+			-Kaksi pelaajaa ohjaavat molemmat omia mailojaan näppäimistöllä
+
+Ohjelman rakenne:
+
+Ohjelman rakenne on hyvin joustava. Keskeisessä asemassa ovat "peli" ja "peliolio" -oliot. Pääsilmukka ajaa aina tietyn "pelin" run-metodin, joita ovat päävalikko, yksin- ja kaksinpeli sekä skitsopeli. Run-metodiin sisältyy varsinainen pelin toimintalogiikka ja se palauttaa tilan, jonka mukaan pääsilmukka käynnistää uuden pelin tai päättyy. 
+
+"Peli"-luokilla on kokoelma peliolioita, jotka vaihtelevat mailasta ja pallosta päävalikon teksteihin. Jokaisella pelioliolla on Neliö-olio, joka huolehtii törmäyksen tunnistuksesta.
+
+Jokaisen pelin oletussilmukka toimii seuraavasti:
+1. Päivitetään peliolioiden tila ja tutkitaan, törmäävätkö ne johonkin.
+2. Piirretään oliot.
+3. Lisätään luodut oliot päivitettävien olioiden listaan.
+4. Poistetaan poistetut oliot päivitettävien olioiden listasta.
+5. Tutkitaan, loppuiko peli.
+6. Nukutaan tietty aika.
+
+Tämä rakenne mahdollistaisi myös muunlaisten pelien kuin Pongin luomisen.
 

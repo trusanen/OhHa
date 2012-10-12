@@ -1,0 +1,12 @@
+Päävalikko:
+
+-Liikuta valitsinta 'w' ja 's' näppäimillä, enter valitsee.
+
+Yksinpeli:
+
+-Liikuta mailaa 'w' ja 's' näppäimillä.
+
+Kaksinpeli:
+
+-Pelaaja 1 liikuttaa mailaa 'w' ja 's' -näppäimillä, pelaaja 2
+taasen 'i' ja 'k' -näppäimillä

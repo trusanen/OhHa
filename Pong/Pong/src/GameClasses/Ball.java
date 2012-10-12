@@ -112,9 +112,12 @@ public class Ball extends GameObject {
     }
     
     /**
+     * 
+     * Laskee uuden y-suunnan nopeuden, eli käytännössä kulman,
+     * jolla pallo kimpoaa mailasta.
      *
      * @param other
-     * @return
+     * @return Palauttaa uuden y-suunnan nopeuden
      */
     public double calculateBounceAngle(GameObject other) {
         
@@ -134,8 +137,9 @@ public class Ball extends GameObject {
     }
     
     /**
+     * Vaihtaa x-suunnan nopeuden suunnan ja kasvattaa sitä.
      *
-     * @return
+     * @return Palauttaa uuden x-suunnan nopeuden
      */
     public double changeXDirection() {
         

@@ -4,7 +4,6 @@
  */
 package pong;
 
-import GameClasses.Ball;
 import GameClasses.GameObject;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
